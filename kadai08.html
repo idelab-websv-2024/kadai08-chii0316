@@ -10,20 +10,23 @@
           results = result.results;
 
           for (var r of results) {
-              var oneline = document.createElement('div');  
-              oneline.innerHTML += r['collectionName'];
-              oneline.innerHTML += '<br>';
-              oneline.innerHTML += r['artistName'];
-              oneline.innerHTML += '<br>';
+            var row = document.createElement('tr');
 
+              var Collection = document.createElement('td');  
+              Collection.innerHTML += r['trackCensoredName'];
+              row.appendChild(Collection);
+
+              var Name = document.createElement('td');
+              Name.innerHTML += r['artistName'];
+              row.appendChild(Name);
+
+              var Image = document.createElement('td');
               var img = document.createElement('img');
               img.src = r['artworkUrl100'];
-              img.innerHTML += r['artworkUrl100'];
-              oneline.appendChild(img);
+              Image.appendChild(img);
+              row.appendChild(Image);
 
-              oneline.innerHTML += '<hr />';
-              output.appendChild(oneline);
-
+              output.appendChild(row);
           }
     }
 
@@ -44,7 +47,14 @@
   <body>
 
 <div id='status'></div>
-<div id='outputArea'></div>
+
+<table border="1" id="outputArea">
+  <tr>
+    <th>trackCensoredName</th>
+    <th>artistName</th>
+    <th>Image</th>
+  </tr>
+</table>
 <input type='text' name='content' id='artist'> 
 <input type='button' id='searchWord' value='検索' onclick='startRequest()'/>
 
