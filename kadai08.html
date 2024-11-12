@@ -1,35 +1,42 @@
-<!DOCTYPE="utf-8">
+<!DOCTYPE='utf-8'>
   <head>
     <title></title>
 
     <script>
     // https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#searchexamples
 
-    function searchCallback(result) {
-        output = document.getElementById('outputArea');
-        results = result.results;
-        for (var r of results) {
-            var oneline = document.createElement('div');
-            oneline.innerHTML = r["collectionName"];
-            oneline.innerHTML += "<br>";
-            oneline.innerHTML += r["artistName"];
-            oneline.innerHTML += "<hr />";
-            output.appendChild(oneline);
-        }
+      function searchCallback(result) {
+          output = document.getElementById('outputArea');
+          results = result.results;
+
+          for (var r of results) {
+              var oneline = document.createElement('div');  
+              oneline.innerHTML += r['collectionName'];
+              oneline.innerHTML += '<br>';
+              oneline.innerHTML += r['artistName'];
+              oneline.innerHTML += '<br>';
+
+              var img = document.createElement('img');
+              img.src = r['artworkUrl100'];
+              img.innerHTML += r['artworkUrl100'];
+              oneline.appendChild(img);
+
+              oneline.innerHTML += '<hr />';
+              output.appendChild(oneline);
+
+          }
     }
 
     function startRequest() {
         var statusField = document.getElementById('status');
-        var s = '手嶌';
-        alert(s);
-        var searchString = encodeURIComponent(s);
-        alert(searchString);
-
+        var artistname = document.getElementById('artist').value;
+        var searchString = encodeURIComponent(artistname);  
         var iTunesURI = 'https://itunes.apple.com/search?term='+searchString+'&callback=searchCallback';
         document.getElementById('caller').setAttribute('src', iTunesURI);
 
         statusField.innerHTML = '';
     }
+
     </script>
 
   </head>
@@ -38,11 +45,11 @@
 
 <div id='status'></div>
 <div id='outputArea'></div>
-<input type='button' id='searchWord' value='検索' onclick="startRequest()"/>
+<input type='text' name='content' id='artist'> 
+<input type='button' id='searchWord' value='検索' onclick='startRequest()'/>
 
-
+<img src = 'https://is4-ssl.mzstatic.com/image/thumb/Music4/v4/e5/8e/d9/e58ed9a0-217b-939b-5d29-96e56338fba6/source/100x100bb.jpg'>
 <script id='caller'></script>
 
   </body>
 </html>
-
